@@ -90,17 +90,21 @@ video {
 
 /* Progress Bar */
 .progress-range {
-
+  width: calc(100% - 30px);
+  background: #777;
+  height: 8px;
   margin: auto;
   border-radius: 10px;
   position: absolute;
   left: 15px;
   top: 15px;
   cursor: pointer;
-
+  transition: all 0.2s ease-in-out;
 }
 
-
+.progress-range:hover {
+  height: 10px;
+}
 
 .progress-bar {
   background: var(--primary-color);
