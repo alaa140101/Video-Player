@@ -14,14 +14,14 @@ const fullscreenBtn = document.querySelector('.fullscreen');
 
 // Play & Pause ----------------------------------- //
 function showPlayBtn() {
-  playBtn.classList.replace('fa-play', 'fa-pause');
+  playBtn.classList.replace('fa-pause', 'fa-play');
   playBtn.setAttribute('title', 'Play');
 }
 
 function togglePlay() {
   if (video.paused) {
     video.play();
-    playBtn.classList.replace('fa-pause', 'fa-play');
+    playBtn.classList.replace('fa-play', 'fa-pause');
     playBtn.setAttribute('title', 'Pause');
   }else {
     video.pause();
@@ -49,6 +49,13 @@ function updateProgress() {
   duration.textContent = displayTime(video.duration);
 }
 
+// Click to seek within the video
+function setProgress(e) {
+  const seekTime = e.offsetX / progressRange.offsetWidth;
+  progressBar.style.width = `${seekTime * 100}%`;
+  video.currentTime = seekTime * video.duration;
+}
+
 // Volume Controls --------------------------- //
 
 
@@ -65,3 +72,4 @@ playBtn.addEventListener('click', togglePlay);
 video.addEventListener('click', togglePlay);
 video.addEventListener('timeupdate', updateProgress);
 video.addEventListener('canplay', updateProgress);
+progressRange.addEventListener('click', setProgress);
