@@ -1,3 +1,4 @@
+const playerArea = document.querySelector('.player');
 const video = document.querySelector('video');
 const progressRange = document.querySelector('.progress-range');
 const progressBar = document.querySelector('.progress-bar');
@@ -9,8 +10,7 @@ const playSpeed = document.querySelector('.player-speed');
 const currentTime = document.querySelector('.time-elapsed');
 const duration = document.querySelector('.time-duration');
 const fullscreenBtn = document.querySelector('.fullscreen');
-
-
+const expandBtn = document.getElementById('expand-btn');
 
 // Play & Pause ----------------------------------- //
 function showPlayBtn() {
@@ -113,7 +113,49 @@ function changeSpeed() {
 
 
 // Fullscreen ------------------------------- //
+/* View in fullscreen */
 
+function openFullscreen(elem) {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.mozRequestFullScreen) { /* Firefox */
+    elem.mozRequestFullScreen();
+  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE/Edge */
+    elem.msRequestFullscreen();
+  }
+  video.classList.add('video-fullscreen');
+}
+
+/* Close fullscreen */
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.mozCancelFullScreen) { /* Firefox */
+    document.mozCancelFullScreen();
+  } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE/Edge */
+    document.msExitFullscreen();
+  }
+  video.classList.remove('video-fullscreen');
+}
+
+let isFullscreen = false;
+
+function toggleFullscreen() {
+  if (!isFullscreen) {
+    openFullscreen(playerArea);
+    expandBtn.classList.replace('fa-expand', 'fa-compress');
+    expandBtn.setAttribute('title', 'Compress');
+  }else {
+    closeFullscreen();
+    expandBtn.classList.replace('fa-compress', 'fa-expand');
+    expandBtn.setAttribute('title', 'Expand');
+  }
+  isFullscreen = !isFullscreen;
+}
 
 // Events Listener
 playBtn.addEventListener('click', togglePlay);
@@ -124,3 +166,4 @@ progressRange.addEventListener('click', setProgress);
 volumeRange.addEventListener('click', changeVolume);
 volumeIcon.addEventListener('click', toggleMute);
 playSpeed.addEventListener('change', changeSpeed);
+fullscreenBtn.addEventListener('click', toggleFullscreen);
